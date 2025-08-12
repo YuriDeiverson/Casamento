@@ -95,6 +95,7 @@ const ConfirmPresence: React.FC<ConfirmPresenceProps> = ({ onNavigate }) => {
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-600"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              required
             />
 
             <input
@@ -103,7 +104,7 @@ const ConfirmPresence: React.FC<ConfirmPresenceProps> = ({ onNavigate }) => {
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-600"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
+              
             />
 
             {message && (
