@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { auth } from "../Firebase.ts";
+import { auth } from "../firabse"
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 interface LoginPageProps {

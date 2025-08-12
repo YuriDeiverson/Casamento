@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ProductModal from "./ProductModal";
 
 // --- Importações do Firebase ---
-import { db } from "../Firebase";
+import { db } from "../firabse";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 
 // --- Suas imagens e lista de presentes ---

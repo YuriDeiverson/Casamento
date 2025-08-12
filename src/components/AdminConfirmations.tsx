@@ -1,7 +1,7 @@
 // src/components/AdminConfirmations.tsx
 
 import React, { useState, useEffect } from "react";
-import { db, auth } from "../Firebase";
+import { db, auth } from "../firabse";
 import {
   collection,
   getDocs,

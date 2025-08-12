@@ -55,7 +55,7 @@ const Header: React.FC = () => {
       </div>
 
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-        <a href="#about" className="block w-12 h-12 rounded-full bg-white shadow flex items-center justify-center text-yellow-600 hover:bg-gray-100 transition">
+        <a href="#about" className=" w-12 h-12 rounded-full bg-white shadow flex items-center justify-center text-yellow-600 hover:bg-gray-100 transition">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>

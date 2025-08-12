@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // ✅ Verifique se o nome do arquivo é 'firebase' (minúsculo)
-import { db } from "../Firebase.ts";
+import { db } from "../firabse";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 // ✅ Verifique se este caminho para a imagem está correto
 import sideImage from "../assets/adress_resized.png";
