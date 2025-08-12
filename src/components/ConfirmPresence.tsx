@@ -91,7 +91,7 @@ const ConfirmPresence: React.FC<ConfirmPresenceProps> = ({ onNavigate }) => {
 
             <input
               type="tel"
-              placeholder="Telefone (Opcional)"
+              placeholder="Telefone"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-600"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -100,7 +100,7 @@ const ConfirmPresence: React.FC<ConfirmPresenceProps> = ({ onNavigate }) => {
 
             <input
               type="email"
-              placeholder="Email"
+              placeholder="Email (Opcional)"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-600"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
