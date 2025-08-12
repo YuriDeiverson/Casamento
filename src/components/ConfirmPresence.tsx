@@ -18,8 +18,8 @@ const ConfirmPresence: React.FC<ConfirmPresenceProps> = ({ onNavigate }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (status: "confirmado" | "nao_irei") => {
-    if (!firstName || !lastName || !email) {
-      setMessage("Por favor, preencha Nome, Sobrenome e Email.");
+    if (!firstName || !lastName || !phone) {
+      setMessage("Por favor, preencha Nome, Sobrenome e Telefone.");
       return;
     }
 
