@@ -1,0 +1,377 @@
+import React, { useState, useRef, useEffect } from "react";
+import ProductModal from "./ProductModal";
+
+// --- Importações do Firebase ---
+import { db } from "../Firebase";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+
+// --- Suas imagens e lista de presentes ---
+import tvImage from "../assets/SmartTV.png";
+import fornoImage from "../assets/Forninho.png";
+import multiprocessadorImage from "../assets/Multiprocessador-removebg-preview.png";
+import microondasImage from "../assets/Microondas-removebg-preview.png";
+import frigideirasImage from "../assets/Panelas-removebg-preview.png";
+import rackImage from "../assets/Rack-removebg-preview.png";
+import BanhoToalha from "../assets/Toalha-removebg-preview.png";
+import Cafeteira from "../assets/Cafeteira-removebg-preview.png";
+
+interface Gift {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  category: string;
+  link: string;
+  isPurchased: boolean;
+}
+
+const initialGifts: Gift[] = [
+  {
+    id: 1,
+    name: "Smart TV 32 LG",
+    price: 969.9,
+    image: tvImage,
+    category: "Eletrodoméstico",
+    link: "https://www.amazon.com.br/LG-32LR600B-Processador-integrado-compat%C3%ADvel/dp/B0D7F19S2L/ref=sr_1_5?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=1S5XZY5VA31Z2&dib=eyJ2IjoiMSJ9.Z_nKWCxAahpwQOYzKJEpPh2wnsGtP4V4S7Mab5170lJycf5Wm_mWt1xQJixMdeux-Ub4TDZW1BUe25LB48G61PYxh8-YAQT-miZCaoHTY7KM3OISTOyl5QuysTbxKnqeGnGRdTRCN9iI5yYF5-x2o2Z-pN39_V3yrnH5-K3vuCxHIErUMqKfp8dSYfsBEpwEBLKqJtbb2JT2MTq-TTsfMZzAsWFWlZ1IS2pEtywACl4uf8alo80kCZ9iRGMP2A_ELrJ8w7cOqgvl6PoEPjENFv5yVBQVp3WihekHjTtJXlY.Lewob7f_GuSsvwd29RyPMSvwVCYNjyG7F2TT4mzboTM&dib_tag=se&keywords=smart+tv&qid=1755014718&s=electronics&sprefix=smart+tv+%2Celectronics%2C170&sr=1-5&ufe=app_do%3Aamzn1.fos.a492fd4a-f54d-4e8d-8c31-35e0a04ce61e",
+    isPurchased: false,
+  },
+  {
+    id: 2,
+    name: "Forno Elétrico Britânia",
+    price: 438.59,
+    image: fornoImage,
+    category: "Eletrodoméstico",
+    link: "https://www.amazon.com.br/dp/B0CBL5C5D4?ref=cm_sw_r_cso_cp_apan_dp_P10R3S12EAVVQK856W76&ref_=cm_sw_r_cso_cp_apan_dp_P10R3S12EAVVQK856W76&social_share=cm_sw_r_cso_cp_apan_dp_P10R3S12EAVVQK856W76",
+    isPurchased: false,
+  },
+  {
+    id: 3,
+    name: "Multiprocessador Turbo Chef 220V",
+    price: 289.0,
+    image: multiprocessadorImage,
+    category: "Cozinha",
+    link: "https://www.amazon.com.br/Multiprocessador-Turbo-Mondial-MPN-01-BE-MULTIPROCESSADOR/dp/B09NXD2DGR/ref=sr_1_8?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=OHWD99SECS6F&dib=eyJ2IjoiMSJ9.q_YYAYLnOwt9A7xjKia8aoZFcbSfbWau2Tw3HoOdJwx9KpQACoTmyahM_PAbAN-Y4SToiVIWJ16TIrWz4ezREMZEDc59wA4L3I6bmd1W_79-3wtJwREBxDY3GO6aE22V9ZyXeTeAzjU_Y0VLjUHiqZ9FmZf-Q1eeSzWdz9NVZ2Aejb9ZhbEP95Vwq0Mxs5be2KBqXqN95aOxUY4L9dp_Kh_tmPRT9bnaCiDQuz94wIGJ3Z0xlYxXvEmm7uINxTduiK-nk6n0cqtpixQuueeJ-qszGGDkbBKYrEYfYnthjuA.Dt5RH12DI1woeQkYcUeJzjjD8Rh5700MrQJTJ34POCA&dib_tag=se&keywords=Multi%2BProcessador%2Bde%2BAlimentos%2BPhilco&qid=1755015124&sprefix=multi%2Bprocessador%2Bde%2Balimentos%2Bphilco%2B%2Caps%2C227&sr=8-8&ufe=app_do%3Aamzn1.fos.fcd6d665-32ba-4479-9f21-b774e276a678&th=1",
+    isPurchased: false,
+  },
+  {
+    id: 4,
+    name: "Micro-Ondas Mondial 220v",
+    price: 610.0,
+    image: microondasImage,
+    category: "Cozinha",
+    link: "https://www.amazon.com.br/dp/B09NHW7XN3/ref=twister_B0CFG5CWQ2?_encoding=UTF8&th=1",
+    isPurchased: false,
+  },
+  {
+    id: 5,
+    name: "Jogo de Panelas Tramontina",
+    price: 296.99,
+    image: frigideirasImage,
+    category: "Cozinha",
+    link: "https://www.amazon.com.br/Tramontina-Alum%C3%ADnio-Revestimento-Antiaderente-Starflon/dp/B0DCDB9CKC/ref=sr_1_3_sspa?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=14QEP26MYM3O7&dib=eyJ2IjoiMSJ9.XM5TUy9G-wKNJMsZqZuWhsaI97LGMkmJHgIn5UbJV5MzBZylrecjwGSJdfUYqyvVWxmUW0P6kAnfEebiXC4UOMSeydzMt06Labc_PKAXsyTnfTj1R3J2QUjGU_qEnMPY-J2Xe55uI4d5kU3H_ZvyME1sOSGP9UARkne_sMhGUmOnn5V5W0qPrSoJIw1VBU7Z0-Qj0IyxlkEoOzFg3HjZM0XCN0p8_9vyhApd81wUf5IMmlLG03QHaadiQZKc2iJG9sjcxzylGlwclNtBdcjHCPXmUPoBC4SdRIoB2skSkjQ.hBtdQiODc3yNCCQWSl0nDeMyY0ipgmX5XiIfulGLe8k&dib_tag=se&keywords=Kit+Panela+De+Press%C3%A3o&qid=1755015666&sprefix=kit+panela+de+press%C3%A3o%2Caps%2C164&sr=8-3-spons&ufe=app_do%3Aamzn1.fos.fcd6d665-32ba-4479-9f21-b774e276a678&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1",
+    isPurchased: false,
+  },
+  {
+    id: 6,
+    name: "Rack Madeira Dubai para TV",
+    price: 329.0,
+    image: rackImage,
+    category: "Móveis",
+    link: "https://www.amazon.com.br/Rack-Madesa-Dubai-para-Polegadas/dp/B085LMXZ57/ref=sr_1_6?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3DHQFRF0ISM8D&dib=eyJ2IjoiMSJ9.ZoDmX1pLpW8YyRqNM8tl3PFBpYrZQRQ9fIMFb9WeXdiJQpeXwPuCmWEXCo5I2eoaRqlqLcaUnbauoakN_TL7K0_n3cBH_c4wzvk7pCtx7wjHh-544ntiPTAIMT5sOnP_Fj9z746o-tjmVXd96m4ZfcQNPThN0gLRU5wVJG3eewMMk-DxTQxav6MyqeA7of9cu7hoQj6wpgd1-GWTJR5aP6J5hrjkFYKXCS-3BOcvcUPo1Ybg9W67nt72kgFj4hGXnUYO1z_wFJdXZqCGcrlA019fKE7HMZBVRHoi1eTMGHU.LyXqaS3vPmYcPI2jY6F33h6cAAv_Peg25ToR-eIgOQw&dib_tag=se&keywords=Rack%2BMadesa%2BDubai&qid=1755015775&sprefix=kit%2Bpanela%2Bde%2Bpress%C3%A3o%2Caps%2C402&sr=8-6&ufe=app_do%3Aamzn1.fos.fcd6d665-32ba-4479-9f21-b774e276a678&th=1",
+    isPurchased: false,
+  },
+  {
+    id: 7,
+    name: "Jogo Banhão 5 Peças",
+    price: 259.0,
+    image: BanhoToalha,
+    category: "Banho",
+    link: "https://www.amazon.com.br/Banh%C3%A3o-Cristal-Renascen%C3%A7a-Penteado-Buettner/dp/B07VKJR8W3/ref=sr_1_2_sspa?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=31A8RCNU7I8SC&dib=eyJ2IjoiMSJ9.C0GLpD5NIou_MP0Mm_8s5ikS8cA3CzL6FKmz1nlTzwiD2DinTKdIDHTksn6YumKAYDJ7YcYCBj63xcfIWXOXh21dkWFhOBO7oGQ8mNZ16MieG2URsEuulpkse1-y5xJiq83dppx-WKwD4y8HRkE5Vlhwa_njt0tisAa3PZivN24okVXjxGpAvWodRYq3LXHZTOZd-EHkhG22vKmh11UIfupKbJujsZSPPFE-4HA_5V2zw8NEy4e0uV5V_9WRNDrMS_5Kpo2GVFtpl3RdBBpHRAnrq6XHlSPbPU7nOZc_Ofo.O5lepy0OKIFOxVrjrEuvGARUquW7lZnGsu3WxrDtqVs&dib_tag=se&keywords=Jogo+Banh%C3%A3o&qid=1755015894&sprefix=rack+madesa+dubai%2Caps%2C418&sr=8-2-spons&ufe=app_do%3Aamzn1.fos.fcd6d665-32ba-4479-9f21-b774e276a678&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1",
+    isPurchased: false,
+  },
+  {
+    id: 8,
+    name: "Cafeteira Elétrica Dolce",
+    price: 140.0,
+    image: Cafeteira,
+    category: "Cozinha",
+    link: "https://www.amazon.com.br/C-35-18x-Cafeteira-Eletrodomesticos-Vermelho/dp/B07K6NL9SV/ref=dp_fod_d_sccl_1/139-0970265-5892018?pd_rd_w=wKjJC&content-id=amzn1.sym.b62ac7bd-1361-4636-859b-961edb7c8aff&pf_rd_p=b62ac7bd-1361-4636-859b-961edb7c8aff&pf_rd_r=51XJQPHRZ5BKQEQX0NSX&pd_rd_wg=ZNFpF&pd_rd_r=c954fc41-b211-408f-9f65-62776c213774&pd_rd_i=B07K6NL9SV&th=1",
+    isPurchased: false,
+  },
+];
+
+// --- Componente React ---
+const GiftsList: React.FC = () => {
+  const [gifts, setGifts] = useState<Gift[]>(initialGifts);
+  const [loading, setLoading] = useState(true);
+  const [selectedGift, setSelectedGift] = useState<Gift | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const categoryButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const syncWithFirestore = async () => {
+      setLoading(true);
+      try {
+        const collectionName = "gifts";
+        const giftsCollectionRef = collection(db, collectionName);
+
+        const updatedGifts = await Promise.all(
+          initialGifts.map(async (localGift) => {
+            const giftDocRef = doc(giftsCollectionRef, String(localGift.id));
+            const docSnap = await getDoc(giftDocRef);
+
+            if (docSnap.exists() && docSnap.data().isPurchased) {
+              return { ...localGift, isPurchased: true };
+            }
+            return localGift;
+          }),
+        );
+
+        setGifts(updatedGifts);
+      } catch (error) {
+        console.error("Erro ao sincronizar com o Firestore:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    syncWithFirestore();
+  }, []);
+
+  const handleGiftClick = (event: React.MouseEvent, gift: Gift) => {
+    event.stopPropagation();
+    setSelectedGift(gift);
+    setIsModalOpen(true);
+  };
+
+  const handleGiftPurchase = async (giftId: number) => {
+    // ✅ BUG CORRIGIDO AQUI: A coleção deve ser 'gifts', para ser consistente.
+    const giftDocRef = doc(db, "gifts", String(giftId));
+    try {
+      await setDoc(giftDocRef, { isPurchased: true });
+
+      setGifts((prevGifts) =>
+        prevGifts.map((gift) =>
+          gift.id === giftId ? { ...gift, isPurchased: true } : gift,
+        ),
+      );
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Erro ao salvar o status do presente:", error);
+      alert("Ocorreu um erro. Tente novamente.");
+    }
+  };
+
+  const categories = Array.from(
+    new Set(initialGifts.map((gift) => gift.category)),
+  );
+  const handleCategorySelect = (category: string | null) => {
+    setSelectedCategory(category);
+    setShowCategoryDropdown(false);
+  };
+
+  const filteredAndSortedGifts = gifts
+    .filter((gift) =>
+      gift.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    )
+    .filter((gift) => !selectedCategory || gift.category === selectedCategory)
+    .sort((a, b) =>
+      sortOrder === "asc" ? a.price - b.price : b.price - a.price,
+    );
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-xl">Sincronizando lista de presentes...</p>
+      </div>
+    );
+  }
+
+  return (
+    <section id="gifts" className="bg-[#F4F4F4] py-12 px-4 sm:px-8 md:px-16">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold text-yellow-600 mb-6">
+          Lista de presentes
+        </h2>
+
+        <div className="bg-white p-4 rounded-lg shadow-md flex flex-col md:flex-row items-center gap-4 mb-8">
+          <div className="relative w-full md:w-48">
+            <button
+              ref={categoryButtonRef}
+              className="flex items-center gap-2 p-3 border border-gray-300 rounded-lg bg-white w-full justify-center"
+              onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-gray-500"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path d="M7 3a1 1 0 00-1 1v1a1 1 0 001 1h2a1 1 0 001-1V4a1 1 0 00-1-1H7zM7 7a1 1 0 00-1 1v1a1 1 0 001 1h2a1 1 0 001-1V8a1 1 0 00-1-1H7zM7 11a1 1 0 00-1 1v1a1 1 0 001 1h2a1 1 0 001-1v-1a1 1 0 00-1-1H7zM7 15a1 1 0 00-1 1v1a1 1 0 001 1h2a1 1 0 001-1v-1a1 1 0 00-1-1H7z" />
+                <path
+                  fillRule="evenodd"
+                  d="M11 3a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 01-1 1h-2a1 1 0 01-1-1V3zM11 7a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 01-1 1h-2a1 1 0 01-1-1V7zM11 11a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 01-1 1h-2a1 1 0 01-1-1v-1zM11 15a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 01-1 1h-2a1 1 0 01-1-1v-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              {selectedCategory || "Categoria"}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className={`h-4 w-4 ml-2 transition-transform ${
+                  showCategoryDropdown ? "rotate-180" : ""
+                }`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            {showCategoryDropdown && (
+              <div className="absolute top-full left-0 mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+                <button
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  onClick={() => handleCategorySelect(null)}
+                >
+                  Todas as Categorias
+                </button>
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                    onClick={() => handleCategorySelect(category)}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="relative flex items-center flex-grow">
+            <input
+              type="text"
+              placeholder="Pesquisar item"
+              className="p-3 pl-10 pr-10 border border-gray-300 rounded-lg w-full"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <span className="absolute left-3 text-gray-400">🔍</span>
+            {searchQuery && (
+              <button
+                className="absolute right-3 text-gray-500 hover:text-gray-800"
+                onClick={() => setSearchQuery("")}
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="flex mb-8 border-b border-gray-300">
+          <button className="py-3 px-6 text-gray-800 font-semibold border-b-2 border-yellow-600 -mb-px">
+            Lista de presentes
+          </button>
+          <button
+            className="py-3 px-6 text-gray-600 hover:text-yellow-600 flex items-center gap-2"
+            onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+          >
+            Faixa de preço
+            {sortOrder === "asc" ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 10l7-7m0 0l7 7m-7-7v18"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {filteredAndSortedGifts.map((gift) => (
+            <div
+              key={gift.id}
+              className={`bg-white p-4 rounded-lg shadow-md relative ${
+                gift.isPurchased
+                  ? "opacity-50 cursor-not-allowed"
+                  : "cursor-pointer"
+              }`}
+              onClick={(e) => !gift.isPurchased && handleGiftClick(e, gift)}
+            >
+              <span className="absolute top-4 left-4 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+                {gift.category}
+              </span>
+              <img
+                src={gift.image}
+                alt={gift.name}
+                className="w-full h-48 object-contain mb-4 mt-8"
+              />
+              <h3 className="text-lg font-semibold">{gift.name}</h3>
+              <div className="flex items-center justify-between mt-2">
+                <p className="text-xl font-bold text-blue-600">
+                  R$ {gift.price.toFixed(2).replace(".", ",")}
+                </p>
+                <button
+                  className={`bg-gray-200 text-gray-800 rounded-full w-8 h-8 flex items-center justify-center text-xl font-bold hover:bg-gray-300 transition-colors ${
+                    gift.isPurchased ? "hidden" : ""
+                  }`}
+                  aria-label="Ver detalhes"
+                >
+                  +
+                </button>
+              </div>
+              {gift.isPurchased && (
+                <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center text-yellow-600 text-xl font-bold rounded-lg">
+                  Comprado!
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {selectedGift && isModalOpen && (
+        <ProductModal
+          gift={selectedGift}
+          onClose={() => setIsModalOpen(false)}
+          onPurchase={() => handleGiftPurchase(selectedGift.id)}
+        />
+      )}
+    </section>
+  );
+};
+
+export default GiftsList;
