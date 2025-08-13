@@ -10,10 +10,13 @@ import tvImage from "../assets/SmartTV.png";
 import fornoImage from "../assets/Forninho.png";
 import multiprocessadorImage from "../assets/Multiprocessador-removebg-preview.png";
 import microondasImage from "../assets/Microondas-removebg-preview.png";
-import frigideirasImage from "../assets/Panelas-removebg-preview.png";
+import frigideirasImage from "../assets/Frigideiras.png";
 import rackImage from "../assets/Rack-removebg-preview.png";
 import BanhoToalha from "../assets/Toalha-removebg-preview.png";
 import Cafeteira from "../assets/Cafeteira-removebg-preview.png";
+import Ededrom from "../assets/Ededrom.png";
+import Cuscuzeira from "../assets/Cuscuzeira.png";
+import Faqueiro from "../assets/Faqueiro.png";
 
 interface Gift {
   id: number;
@@ -46,16 +49,16 @@ const initialGifts: Gift[] = [
   },
   {
     id: 3,
-    name: "Multiprocessador Turbo Chef 220V",
+    name: "Multiprocessador Turbo Chef",
     price: 289.0,
     image: multiprocessadorImage,
     category: "Cozinha",
-    link: "https://www.amazon.com.br/Multiprocessador-Turbo-Mondial-MPN-01-BE-MULTIPROCESSADOR/dp/B09NXD2DGR/ref=sr_1_8?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=OHWD99SECS6F&dib=eyJ2IjoiMSJ9.q_YYAYLnOwt9A7xjKia8aoZFcbSfbWau2Tw3HoOdJwx9KpQACoTmyahM_PAbAN-Y4SToiVIWJ16TIrWz4ezREMZEDc59wA4L3I6bmd1W_79-3wtJwREBxDY3GO6aE22V9ZyXeTeAzjU_Y0VLjUHiqZ9FmZf-Q1eeSzWdz9NVZ2Aejb9ZhbEP95Vwq0Mxs5be2KBqXqN95aOxUY4L9dp_Kh_tmPRT9bnaCiDQuz94wIGJ3Z0xlYxXvEmm7uINxTduiK-nk6n0cqtpixQuueeJ-qszGGDkbBKYrEYfYnthjuA.Dt5RH12DI1woeQkYcUeJzjjD8Rh5700MrQJTJ34POCA&dib_tag=se&keywords=Multi%2BProcessador%2Bde%2BAlimentos%2BPhilco&qid=1755015124&sprefix=multi%2Bprocessador%2Bde%2Balimentos%2Bphilco%2B%2Caps%2C227&sr=8-8&ufe=app_do%3Aamzn1.fos.fcd6d665-32ba-4479-9f21-b774e276a678&th=1",
+    link: "https://www.amazon.com.br/dp/B09NX8NZRW/ref=twister_B0CBLSZFFS?_encoding=UTF8&th=1",
     isPurchased: false,
   },
   {
     id: 4,
-    name: "Micro-Ondas Mondial 220v",
+    name: "Micro-Ondas Mondial",
     price: 610.0,
     image: microondasImage,
     category: "Cozinha",
@@ -64,20 +67,20 @@ const initialGifts: Gift[] = [
   },
   {
     id: 5,
-    name: "Jogo de Panelas Tramontina",
-    price: 296.99,
+    name: "Jogo de frigideiras 3 pçs",
+    price: 104.38,
     image: frigideirasImage,
     category: "Cozinha",
-    link: "https://www.amazon.com.br/Tramontina-Alum%C3%ADnio-Revestimento-Antiaderente-Starflon/dp/B0DCDB9CKC/ref=sr_1_3_sspa?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=14QEP26MYM3O7&dib=eyJ2IjoiMSJ9.XM5TUy9G-wKNJMsZqZuWhsaI97LGMkmJHgIn5UbJV5MzBZylrecjwGSJdfUYqyvVWxmUW0P6kAnfEebiXC4UOMSeydzMt06Labc_PKAXsyTnfTj1R3J2QUjGU_qEnMPY-J2Xe55uI4d5kU3H_ZvyME1sOSGP9UARkne_sMhGUmOnn5V5W0qPrSoJIw1VBU7Z0-Qj0IyxlkEoOzFg3HjZM0XCN0p8_9vyhApd81wUf5IMmlLG03QHaadiQZKc2iJG9sjcxzylGlwclNtBdcjHCPXmUPoBC4SdRIoB2skSkjQ.hBtdQiODc3yNCCQWSl0nDeMyY0ipgmX5XiIfulGLe8k&dib_tag=se&keywords=Kit+Panela+De+Press%C3%A3o&qid=1755015666&sprefix=kit+panela+de+press%C3%A3o%2Caps%2C164&sr=8-3-spons&ufe=app_do%3Aamzn1.fos.fcd6d665-32ba-4479-9f21-b774e276a678&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1",
+    link: "https://www.amazon.com.br/Tramontina-JOGO-FRIGIDEIRAS-CARIBE-PRETO/dp/B09W48TKX2/ref=sr_1_5?dib=eyJ2IjoiMSJ9.kibsR3yJIda2A_U3CLaLq6hwqRLTGnjUzHPc1395htJ7Wi5xSyEkh4K8Tht16egKeuIbVt6w1VWWLOMKgzbIHosVIUyCRMO2DnpWnYic-MoGsxevLWoyR9NCExuUGnRjA68kvgDD0bfXEUrWQn4JlE6Mzun3q02Xv1oRpTspTGy6krq_mzHSyWvrv8DTzw4jYVzNQ_rIg_uBFRR0upfrks_f-3qmnUeJVBGU0kTRuOiO_O7f3KHVrDBqLuDY22VFpyGbBbPgSkwv2jiT-u3Pd3gdiHzUayFoGaLeld0KoPM.DGJ-DPA64NHMqzUSdZj0RycogZ_jM82aRRMOzoZOzoo&dib_tag=se&keywords=jogo+de+frigideira+tramontina&qid=1755103096&sr=8-5&ufe=app_do%3Aamzn1.fos.6121c6c4-c969-43ae-92f7-cc248fc6181d",
     isPurchased: false,
   },
   {
     id: 6,
     name: "Rack Madeira Dubai para TV",
-    price: 329.0,
+    price: 349.99,
     image: rackImage,
     category: "Móveis",
-    link: "https://www.amazon.com.br/Rack-Madesa-Dubai-para-Polegadas/dp/B085LMXZ57/ref=sr_1_6?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3DHQFRF0ISM8D&dib=eyJ2IjoiMSJ9.ZoDmX1pLpW8YyRqNM8tl3PFBpYrZQRQ9fIMFb9WeXdiJQpeXwPuCmWEXCo5I2eoaRqlqLcaUnbauoakN_TL7K0_n3cBH_c4wzvk7pCtx7wjHh-544ntiPTAIMT5sOnP_Fj9z746o-tjmVXd96m4ZfcQNPThN0gLRU5wVJG3eewMMk-DxTQxav6MyqeA7of9cu7hoQj6wpgd1-GWTJR5aP6J5hrjkFYKXCS-3BOcvcUPo1Ybg9W67nt72kgFj4hGXnUYO1z_wFJdXZqCGcrlA019fKE7HMZBVRHoi1eTMGHU.LyXqaS3vPmYcPI2jY6F33h6cAAv_Peg25ToR-eIgOQw&dib_tag=se&keywords=Rack%2BMadesa%2BDubai&qid=1755015775&sprefix=kit%2Bpanela%2Bde%2Bpress%C3%A3o%2Caps%2C402&sr=8-6&ufe=app_do%3Aamzn1.fos.fcd6d665-32ba-4479-9f21-b774e276a678&th=1",
+    link: "https://www.amazon.com.br/Rack-Madesa-Dubai-para-Polegadas/dp/B085CMZN2S/ref=sr_1_3?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=2D03U422RCSO7&dib=eyJ2IjoiMSJ9.G7T5eUHDksyr8tzA9NkbZ8Sz8y98wZxRH4z2sq2aVPld4hZXAIuIjP5d-gi5rPtQpNXGSbcwk0qvX3RtZ8aQzXd1HUQysV3cMOX47_Sg3SfrlYbUErvDxjuS_F2WZOKJVgOSIQuTyZU6U9lqiYMFlveaPgcaLkHDf50l5XDZKKKb5QpnhfSNEoz530-AvGS-vbP5j3X0iu3VtekzRSVAHoVNyN_yQzzyY2R9wMjjlDM.G941ULhraxECc-1QbS5vy_9VyWMeZzyX9U3m-BAA8Ug&dib_tag=se&keywords=Rack%2BMadesa%2BDubai%2Bbranco&qid=1755102656&s=home&sprefix=rack%2Bmadesa%2Bdubai%2Bbran%2Chome%2C172&sr=1-3&ufe=app_do%3Aamzn1.fos.fcd6d665-32ba-4479-9f21-b774e276a678&th=1",
     isPurchased: false,
   },
   {
@@ -85,7 +88,7 @@ const initialGifts: Gift[] = [
     name: "Jogo Banhão 5 Peças",
     price: 259.0,
     image: BanhoToalha,
-    category: "Banho",
+    category: "Cama, Mesa e Banho",
     link: "https://www.amazon.com.br/Banh%C3%A3o-Cristal-Renascen%C3%A7a-Penteado-Buettner/dp/B07VKJR8W3/ref=sr_1_2_sspa?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=31A8RCNU7I8SC&dib=eyJ2IjoiMSJ9.C0GLpD5NIou_MP0Mm_8s5ikS8cA3CzL6FKmz1nlTzwiD2DinTKdIDHTksn6YumKAYDJ7YcYCBj63xcfIWXOXh21dkWFhOBO7oGQ8mNZ16MieG2URsEuulpkse1-y5xJiq83dppx-WKwD4y8HRkE5Vlhwa_njt0tisAa3PZivN24okVXjxGpAvWodRYq3LXHZTOZd-EHkhG22vKmh11UIfupKbJujsZSPPFE-4HA_5V2zw8NEy4e0uV5V_9WRNDrMS_5Kpo2GVFtpl3RdBBpHRAnrq6XHlSPbPU7nOZc_Ofo.O5lepy0OKIFOxVrjrEuvGARUquW7lZnGsu3WxrDtqVs&dib_tag=se&keywords=Jogo+Banh%C3%A3o&qid=1755015894&sprefix=rack+madesa+dubai%2Caps%2C418&sr=8-2-spons&ufe=app_do%3Aamzn1.fos.fcd6d665-32ba-4479-9f21-b774e276a678&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1",
     isPurchased: false,
   },
@@ -96,6 +99,34 @@ const initialGifts: Gift[] = [
     image: Cafeteira,
     category: "Cozinha",
     link: "https://www.amazon.com.br/C-35-18x-Cafeteira-Eletrodomesticos-Vermelho/dp/B07K6NL9SV/ref=dp_fod_d_sccl_1/139-0970265-5892018?pd_rd_w=wKjJC&content-id=amzn1.sym.b62ac7bd-1361-4636-859b-961edb7c8aff&pf_rd_p=b62ac7bd-1361-4636-859b-961edb7c8aff&pf_rd_r=51XJQPHRZ5BKQEQX0NSX&pd_rd_wg=ZNFpF&pd_rd_r=c954fc41-b211-408f-9f65-62776c213774&pd_rd_i=B07K6NL9SV&th=1",
+    isPurchased: false,
+  },
+  {
+    id: 8,
+    name: "Coberdrom Colcha Cobre Leito Edredom Com Enchimento",
+    price: 279.00,
+    image: Ededrom,
+    category: "Cama, Mesa e Banho",
+    link: "https://www.amazon.com.br/Coberdrom-Colcha-Edredom-Enchimento-Xadrez/dp/B0DVCJDJ7L/ref=sr_1_2_sspa?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=2EL2Q0VNP85UT&dib=eyJ2IjoiMSJ9.9TWjk7GbgFW1hQ-Q2yz73eWxVX1k-5ErbSJecJ8xvuvtSrFaBqU9Z7rFhPCsNa6xkXyTPDvNktiWY1KViwJbOvICnsFY2g6sNJtoSAOjuqYjxH9UMimY6fKLqsTW6aaUzFkaWXM-7CoSmMK8Z7zgYK4mx9HjGVexKGjBVwh-D7kTdbB0jdHgROXTDornT_E3GA53r89Jeo7h_WpZT5r2rDAjfOyanaJNlnxDdYOm7AE.mRBO8yMngBQzkP_ujN9eh4X9cSsGfbh6nLzhWZ59mI0&dib_tag=se&keywords=Kit%2BColcha%2BCobre%2BLeito%2BCasal&qid=1755102776&s=home&sprefix=kit%2Bcolcha%2Bcobre%2Bleito%2Bcasal%2Chome%2C297&sr=1-2-spons&ufe=app_do%3Aamzn1.fos.fcd6d665-32ba-4479-9f21-b774e276a678&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1",
+    isPurchased: false,
+  },
+  {
+    id: 8,
+    name: "Panela De Pressão  + Cuscuzeira ",
+    price: 194.77,
+    image: Cuscuzeira,
+    category: "Cozinha",
+    link: "https://produto.mercadolivre.com.br/MLB-4408536722-kit-panela-de-presso-antiaderente-45l-cuscuzeira-t-vidro-_JM?attributes=COLOR_SECONDARY_COLOR%3AVmVybWVsaG8%3D#reviews",
+    isPurchased: false,
+  },
+
+    {
+    id: 8,
+    name: "Faqueiro 42 Pçs Inox",
+    price: 124.99,
+    image: Faqueiro,
+    category: "Cozinha",
+    link: "https://www.mercadolivre.com.br/faqueiro-42-pcs-inox-siena-serve-6-pessoas-brinox-5109120/up/MLBU1118127242?pdp_filters=item_id:MLB2861433301#origin%3Dshare%26sid%3Dshare",
     isPurchased: false,
   },
 ];

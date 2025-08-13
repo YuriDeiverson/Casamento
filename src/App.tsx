@@ -4,6 +4,7 @@ import  { useState } from 'react';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
 import About from './components/About';
+import DressCode from './components/DressCode';
 import Adress from './components/Adress';
 import GiftsList from './components/GiftsList';
 import ConfirmPresence from './components/ConfirmPresence';
@@ -31,6 +32,7 @@ function App() {
         <>
           <Header />
           <About />
+          <DressCode />
           <Adress />
           <GiftsList />
         </>
