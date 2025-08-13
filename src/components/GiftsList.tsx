@@ -11,7 +11,7 @@ import fornoImage from "../assets/Forninho.png";
 import multiprocessadorImage from "../assets/Multiprocessador-removebg-preview.png";
 import microondasImage from "../assets/Microondas-removebg-preview.png";
 import frigideirasImage from "../assets/Frigideiras.png";
-import rackImage from "../assets/Rack-removebg-preview.png";
+import rackImage from "../assets/Rack.png";
 import BanhoToalha from "../assets/Toalha-removebg-preview.png";
 import Cafeteira from "../assets/Cafeteira-removebg-preview.png";
 import Ededrom from "../assets/Ededrom.png";
@@ -226,7 +226,7 @@ const GiftsList: React.FC = () => {
   return (
     <section id="gifts" className="bg-[#F4F4F4] py-12 px-4 sm:px-8 md:px-16">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-yellow-600 mb-6">
+        <h2 className="text-3xl md:text-4xl font-bold text-[#d8b348] mb-6">
           Lista de presentes
         </h2>
 
@@ -313,7 +313,7 @@ const GiftsList: React.FC = () => {
             Lista de presentes
           </button>
           <button
-            className="py-3 px-6 text-gray-600 hover:text-yellow-600 flex items-center gap-2"
+            className="py-3 px-6 text-gray-600 hover:text-[#d8b348] flex items-center gap-2"
             onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
           >
             Faixa de preço
@@ -385,7 +385,7 @@ const GiftsList: React.FC = () => {
                 </button>
               </div>
               {gift.isPurchased && (
-                <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center text-yellow-600 text-xl font-bold rounded-lg">
+                <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center text-[#d8b348] text-xl font-bold rounded-lg">
                   Comprado!
                 </div>
               )}

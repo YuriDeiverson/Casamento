@@ -24,8 +24,8 @@ const About: React.FC = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-16 md:gap-20">
         {/* --- Coluna de Texto à esquerda --- */}
         <div className="flex-1 flex flex-col items-start relative md:pl-8 z-10">
-          <div className="absolute left-0 top-0 w-1 h-20 bg-yellow-600 hidden md:block" />
-          <h2 className="text-3xl md:text-4xl font-bold text-yellow-600 mb-6 pl-4 md:pl-0">
+          <div className="absolute left-0 top-0 w-1 h-20 bg-[#d8b348] hidden md:block" />
+          <h2 className="text-3xl md:text-4xl font-bold text-[#d8b348] mb-6 pl-4 md:pl-0">
             Nossa história
           </h2>
 

@@ -67,7 +67,7 @@ const Login: React.FC<LoginPageProps> = ({ onNavigate }) => {
           {error && <p className="text-red-600 text-sm text-center">{error}</p>}
           <button
             type="submit"
-            className="w-full bg-yellow-600 text-white font-bold py-3 rounded-lg hover:bg-yellow-700 transition-colors disabled:opacity-50"
+            className="w-full bg-[#D8B348] text-white font-bold py-3 rounded-lg hover:bg-yellow-700 transition-colors disabled:opacity-50"
             disabled={isLoggingIn}
           >
             {isLoggingIn ? "Entrando..." : "Entrar"}

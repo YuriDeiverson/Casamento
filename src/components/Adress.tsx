@@ -10,11 +10,11 @@ const Adress: React.FC = () => {
           
          
 
-          <h2 className="text-3xl md:text-4xl font-bold text-yellow-600 mb-6 pl-4 md:pl-0">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#d8b348] mb-6 pl-4 md:pl-0">
             Local
           </h2>
           {/* Linha amarela abaixo do título */}
-          <div className="w-16 h-1 bg-yellow-600 mb-6 ml-4 md:ml-0" />
+          <div className="w-16 h-1 bg-[#d8b348] mb-6 ml-4 md:ml-0" />
 
           <p className="text-gray-700 text-base sm:text-lg leading-relaxed text-justify pl-4 md:pl-0">
             Data: 28 de Novembro às 18 hrs

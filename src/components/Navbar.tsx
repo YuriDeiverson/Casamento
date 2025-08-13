@@ -30,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
       <div className="flex justify-between items-center max-w-7xl mx-auto h-16">
         {/* Logo */}
         <a href="#" className="flex items-center space-x-2" onClick={() => onNavigate('home')}>
-          <span className="text-yellow-600">
+          <span className="text-[#D8B348]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-8 w-8"
@@ -53,8 +53,8 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
             <li key={link.href}>
               <a
                 href={link.href}
-                className={`py-2 border-b-2 border-transparent hover:border-yellow-600 transition-colors ${
-                  activeTab === link.href.substring(1) ? "text-yellow-600 font-bold border-yellow-600" : ""
+                className={`py-2 border-b-2 border-transparent hover:border-[#D8B348] transition-colors ${
+                  activeTab === link.href.substring(1) ? "text-[#D8B348] font-bold border-[#D8B348]" : ""
                 }`}
                 onClick={() => onNavigate('home')} // Navega para a home e rola para a seção
               >
@@ -68,7 +68,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
         <div className="hidden md:block">
           <button
             onClick={() => onNavigate('confirm-presence')} // Redireciona para a página de confirmação
-            className="shadow-md p-3 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg font-bold transition-colors"
+            className="shadow-md p-3 bg-[#D8B348] hover:bg-yellow-700 text-white rounded-lg font-bold transition-colors"
           >
             Confirmar presença
           </button>
@@ -93,8 +93,8 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
                 <a
                   href={link.href}
                   onClick={() => { setMenuOpen(false); onNavigate('home'); }}
-                  className={`block py-2 hover:text-yellow-600 ${
-                    activeTab === link.href.substring(1) ? "text-yellow-600 font-bold" : ""
+                  className={`block py-2 hover:text-[#D8B348] ${
+                    activeTab === link.href.substring(1) ? "text-[#D8B348] font-bold" : ""
                   }`}
                 >
                   {link.text}
@@ -102,7 +102,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
               </li>
             ))}
           </ul>
-          <div className="p-3 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg font-bold text-center transition-colors">
+          <div className="p-3 bg-[#D8B348] hover:bg-yellow-700 text-white rounded-lg font-bold text-center transition-colors">
             <button onClick={() => { setMenuOpen(false); onNavigate('confirm-presence'); }}>Confirmar presença</button>
           </div>
         </div>

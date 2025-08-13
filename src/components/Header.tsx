@@ -13,11 +13,11 @@ const Header: React.FC = () => {
     <header className="relative w-full bg-[#F4F4F4] py-48 px-6 md:px-12">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
         <div className="relative flex-1 flex flex-col items-start md:pl-10">
-          <div className="absolute left-0 top-0 bottom-0 w-1 h-20 bg-yellow-600 hidden md:block" />
+          <div className="absolute left-0 top-0 bottom-0 w-1 h-20 bg-[#d8b348] hidden md:block" />
 
           <div className="flex flex-col w-full">
             <h1 className="text-xl sm:text-2xl text-gray-700 font-light">
-              Bem-vindos ao <span className="text-yellow-600">💛</span>
+              Bem-vindos ao <span className="text-[#d8b348]">💛</span>
             </h1>
             <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mt-2 leading-tight">
               Casamento de Yuri e Leila
@@ -31,7 +31,7 @@ const Header: React.FC = () => {
               {/* Link 1: Nossa história */}
               <a
                 href="#about"
-                className="flex items-center gap-4 text-gray-700 font-medium hover:text-yellow-600 transition"
+                className="flex items-center gap-4 text-gray-700 font-medium hover:text-[#d8b348] transition"
               >
                 <FontAwesomeIcon
                   icon={faBookOpen}
@@ -43,7 +43,7 @@ const Header: React.FC = () => {
               {/* Link 2: Endereço */}
               <a
                 href="#menu" // O href aqui deveria ser #location ou algo similar
-                className="flex items-center gap-4 text-gray-700 font-medium hover:text-yellow-600 transition"
+                className="flex items-center gap-4 text-gray-700 font-medium hover:text-[#D8B348] transition"
               >
                 <FontAwesomeIcon
                   icon={faLocationDot}
@@ -55,7 +55,7 @@ const Header: React.FC = () => {
               {/* Link 3: Menu */}
               <a
                 href="#menu"
-                className="flex items-center gap-4 text-gray-700 font-medium hover:text-yellow-600 transition"
+                className="flex items-center gap-4 text-gray-700 font-medium hover:text-[#D8B348] transition"
               >
                 <FontAwesomeIcon
                   icon={faUtensils}
@@ -67,7 +67,7 @@ const Header: React.FC = () => {
               {/* Link 4: Lista de presentes */}
               <a
                 href="#gifts"
-                className="flex items-center gap-4 text-gray-700 font-medium hover:text-yellow-600 transition"
+                className="flex items-center gap-4 text-gray-700 font-medium hover:text-[#D8B348] transition"
               >
                 <FontAwesomeIcon
                   icon={faGift}
@@ -91,7 +91,7 @@ const Header: React.FC = () => {
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
         <a
           href="#about"
-          className=" w-12 h-12 rounded-full bg-white shadow flex items-center justify-center text-yellow-600 hover:bg-gray-100 transition"
+          className=" w-12 h-12 rounded-full bg-white shadow flex items-center justify-center text-[#D8B348] hover:bg-gray-100 transition"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
