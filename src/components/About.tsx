@@ -4,7 +4,7 @@ import type { Variants } from "framer-motion";
 
 // TODO: Troque os placeholders pelas suas 6 fotos do casal
 // Sugestão: Coloque as fotos em ordem cronológica, da mais antiga para a mais nova.
-import casalFoto1 from "/src/assets/casal-foto-10.jpg"; // Foto mais antiga
+import casalFoto1 from "/src/assets/casal-foto-6.jpg"; // Foto mais antiga
 import casalFoto2 from "/src/assets/casal-foto-2.jpg";
 import casalFoto3 from "/src/assets/casal-foto-3.jpg";
 import casalFoto5 from "/src/assets/casal-foto-5.jpg";
