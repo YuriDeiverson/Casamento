@@ -4,12 +4,12 @@ import type { Variants } from "framer-motion";
 
 // TODO: Troque os placeholders pelas suas 6 fotos do casal
 // Sugestão: Coloque as fotos em ordem cronológica, da mais antiga para a mais nova.
-import casalFoto1 from "/src/assets/casal-foto-1.jpg"; // Foto mais antiga
+import casalFoto1 from "/src/assets/casal-foto-10.jpg"; // Foto mais antiga
 import casalFoto2 from "/src/assets/casal-foto-2.jpg";
 import casalFoto3 from "/src/assets/casal-foto-3.jpg";
 import casalFoto5 from "/src/assets/casal-foto-5.jpg";
-import casalFoto6 from "/src/assets/casal-foto-6.jpg";
-import casalFoto7 from "/src/assets/casal-foto-7.jpg"; // Foto mais recente
+import casalFoto6 from "/src/assets/casal-foto-9.jpg";
+import casalFoto7 from "/src/assets/casal-foto-8.jpg"; // Foto mais recente
 
 // 2. Definição das variantes de animação para um código mais limpo
 const containerVariants = {
@@ -53,16 +53,16 @@ const photoVariants : Variants = {
 
 const About: React.FC = () => {
   const photos = [
-    { src: casalFoto1, alt: "Início do namoro", caption: "// commit inicial: 2018", position: "top-0 left-10", rotation: "-rotate-3" },
-    { src: casalFoto2, alt: "Primeira viagem", caption: "// feature: primeiraViagem.js", position: "top-32 right-8", rotation: "rotate-2" },
-    { src: casalFoto3, alt: "Um momento especial", caption: "// refactor: mais um ano juntos", position: "top-64 left-12", rotation: "rotate-4" },
-    { src: casalFoto5, alt: "Aniversário", caption: "// merge: planos futuros", position: "top-96 right-16", rotation: "-rotate-5" },
-    { src: casalFoto6, alt: "Noivado", caption: "// release: v2.0-noivado", position: "top-[30rem] left-8", rotation: "rotate-2" },
-    { src: casalFoto7, alt: "Foto recente", caption: "// deploy: --casamento", position: "top-[38rem] right-10", rotation: "-rotate-3" },
+    { src: casalFoto1, alt: "Início do namoro", caption: "// 2018", position: "top-0 left-10", rotation: "-rotate-3" },
+    { src: casalFoto2, alt: "Primeira viagem", caption: "// 2024", position: "top-32 right-8", rotation: "rotate-2" },
+    { src: casalFoto3, alt: "Um momento especial", caption: "// 2022", position: "top-64 left-12", rotation: "rotate-4" },
+    { src: casalFoto5, alt: "Aniversário", caption: "// 2023", position: "top-96 right-16", rotation: "-rotate-5" },
+    { src: casalFoto6, alt: "Noivado", caption: "// 2019", position: "top-[30rem] left-8", rotation: "rotate-2" },
+    { src: casalFoto7, alt: "Foto recente", caption: "// 2022", position: "top-[38rem] right-10", rotation: "-rotate-3" },
   ];
 
   return (
-    <section id="about" className="bg-[#F4F4F4] py-24 px-4 sm:px-8 md:px-16 overflow-x-hidden">
+    <section id="about" className="bg-[#F4F4F4] py-32 sm:py-40 px-4 sm:px-8 md:px-16 overflow-x-hidden">
       <motion.div
         className="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-16 md:gap-20"
         variants={containerVariants}
@@ -72,8 +72,8 @@ const About: React.FC = () => {
       >
         {/* --- Coluna de Texto à esquerda com animação --- */}
         <motion.div variants={textVariants} className="flex-1 flex flex-col items-start relative md:pl-8 z-10">
-          <div className="absolute left-0 top-0 w-1 h-20 bg-yellow-600 hidden md:block" />
-          <h2 className="text-3xl md:text-4xl font-bold text-yellow-600 mb-6 pl-4 md:pl-0">
+          <div className="absolute left-0 top-0 w-1 h-20 bg-[#d8b348] hidden md:block" />
+          <h2 className="text-3xl md:text-4xl font-bold text-[#d8b348] mb-6 pl-4 md:pl-0">
             Nossa história
           </h2>
 

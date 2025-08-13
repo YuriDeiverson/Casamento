@@ -27,7 +27,7 @@ const staggerChildren: Variants = {
 
 const DressCode: React.FC = () => {
   return (
-    <section id="dresscode" className="bg-[#F4F4F4] py-24 px-6 md:px-12">
+    <section id="dresscode" className="bg-[#F4F4F4] py-32 sm:py-40 px-6 md:px-12">
       <motion.div
         className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-20"
         initial="hidden"

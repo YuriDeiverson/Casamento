@@ -31,7 +31,7 @@ const Adress: React.FC = () => {
   return (
     <motion.section
       id="adress"
-      className="bg-[#F4F4F4] py-24 px-4 sm:px-8 md:px-16"
+      className="bg-[#F4F4F4] py-32 sm:py-40 px-4 sm:px-8 md:px-16"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -76,22 +76,22 @@ const Adress: React.FC = () => {
         </motion.div>
 
         {/* Coluna da Imagem com Parallax */}
-        <motion.div
-          variants={fadeInUp}
-          className="flex-1 w-full flex justify-start md:justify-end mt-10 md:mt-0"
-        >
-          <motion.img
-            src={imagemForneto}
-            alt="Forneto Restaurante"
-            className="w-full max-w-lg rounded-lg shadow-lg object-cover"
-            style={{ y: yParallax }}
-            whileHover={{ scale: 1.03, rotate: 0.5 }}
-            transition={{ type: "spring", stiffness: 200 }}
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-          />
-        </motion.div>
+     <motion.div
+  variants={fadeInUp}
+  className="flex-1 w-full flex justify-center md:justify-end mt-10 md:mt-0"
+>
+  <motion.img
+    src={imagemForneto}
+    alt="Forneto Restaurante"
+    className="w-full md:w-[550px] lg:w-[600px] rounded-xl shadow-2xl object-cover"
+    style={{ y: yParallax }}
+    whileHover={{ scale: 1.05, rotate: 0.5 }}
+    transition={{ type: "spring", stiffness: 220 }}
+    initial={{ opacity: 0, scale: 0.95 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true }}
+  />
+</motion.div>
       </div>
     </motion.section>
   );

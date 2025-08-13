@@ -232,132 +232,121 @@ const GiftsList: React.FC = () => {
   };
 
   return (
-    <section id="gifts" className="bg-[#F4F4F4] py-12 px-4 sm:px-8 md:px-16">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#d8b348] mb-6">
-          Lista de presentes
-        </h2>
+    <section
+  id="gifts"
+  className="bg-[#F4F4F4] py-12 px-4 sm:px-8 md:px-16"
+>
+  <div className="max-w-7xl mx-auto">
+    <h2 className="text-3xl md:text-4xl font-bold text-[#d8b348] mb-6">
+      Lista de presentes
+    </h2>
 
-        {/* Filtros e pesquisa */}
-        <div className="bg-white p-4 rounded-lg shadow-md flex flex-col md:flex-row items-center gap-4 mb-8">
-          {/* Dropdown categoria */}
-          <div className="relative w-full md:w-48">
-            <button
-              ref={categoryButtonRef}
-              className="flex items-center gap-2 p-3 border border-gray-300 rounded-lg bg-white w-full justify-center"
-              onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-            >
-              {selectedCategory || "Categoria"}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className={`h-4 w-4 ml-2 transition-transform ${showCategoryDropdown ? "rotate-180" : ""}`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+    {/* Filtros */}
+    <div className="bg-white p-4 rounded-lg shadow-md flex flex-col sm:flex-row items-center gap-4 mb-8">
+      {/* Dropdown categoria */}
+      <div className="relative w-full sm:w-48">
+        <button
+          ref={categoryButtonRef}
+          className="flex items-center gap-2 p-3 border border-gray-300 rounded-lg bg-white w-full justify-center"
+          onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
+        >
+          {selectedCategory || "Categoria"}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className={`h-4 w-4 ml-2 transition-transform ${showCategoryDropdown ? "rotate-180" : ""}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        {showCategoryDropdown && (
+          <div className="absolute top-full left-0 mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+            <button className="block w-full text-left px-4 py-2 hover:bg-gray-100" onClick={() => handleCategorySelect(null)}>
+              Todas as Categorias
             </button>
-            {showCategoryDropdown && (
-              <div className="absolute top-full left-0 mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10">
-                <button
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                  onClick={() => handleCategorySelect(null)}
-                >
-                  Todas as Categorias
-                </button>
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                    onClick={() => handleCategorySelect(category)}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Pesquisa */}
-          <div className="relative flex items-center flex-grow">
-            <input
-              type="text"
-              placeholder="Pesquisar item"
-              className="p-3 pl-10 pr-10 border border-gray-300 rounded-lg w-full"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <span className="absolute left-3 text-gray-400">🔍</span>
-            {searchQuery && (
+            {categories.map((category) => (
               <button
-                className="absolute right-3 text-gray-500 hover:text-gray-800"
-                onClick={() => setSearchQuery("")}
+                key={category}
+                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                onClick={() => handleCategorySelect(category)}
               >
-                ✕
+                {category}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Pesquisa */}
+      <div className="relative flex items-center flex-grow w-full sm:w-auto">
+        <input
+          type="text"
+          placeholder="Pesquisar item"
+          className="p-3 pl-10 pr-10 border border-gray-300 rounded-lg w-full sm:w-auto"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <span className="absolute left-3 text-gray-400">🔍</span>
+        {searchQuery && (
+          <button className="absolute right-3 text-gray-500 hover:text-gray-800" onClick={() => setSearchQuery("")}>
+            ✕
+          </button>
+        )}
+      </div>
+    </div>
+
+    {/* Lista de presentes */}
+    <motion.div
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {filteredAndSortedGifts.map((gift) => (
+        <motion.div
+          key={gift.id}
+          variants={itemVariants}
+          className={`bg-white p-4 rounded-lg shadow-md relative ${
+            gift.isPurchased ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+          }`}
+          onClick={(e) => !gift.isPurchased && handleGiftClick(e, gift)}
+          whileHover={!gift.isPurchased ? { scale: 1.03 } : {}}
+          whileTap={!gift.isPurchased ? { scale: 0.97 } : {}}
+        >
+          <span className="absolute top-4 left-4 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+            {gift.category}
+          </span>
+          <img src={gift.image} alt={gift.name} className="w-full h-40 sm:h-48 object-contain mb-4 mt-8" />
+          <h3 className="text-lg font-semibold">{gift.name}</h3>
+          <div className="flex items-center justify-between mt-2">
+            <p className="text-xl font-bold text-blue-600">
+              R$ {gift.price.toFixed(2).replace(".", ",")}
+            </p>
+            {!gift.isPurchased && (
+              <button
+                className="bg-gray-200 text-gray-800 rounded-full w-8 h-8 flex items-center justify-center text-xl font-bold hover:bg-gray-300 transition-colors"
+                aria-label="Ver detalhes"
+              >
+                +
               </button>
             )}
           </div>
-        </div>
-
-        {/* Lista de presentes */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {filteredAndSortedGifts.map((gift) => (
-            <motion.div
-              key={gift.id}
-              variants={itemVariants}
-              className={`bg-white p-4 rounded-lg shadow-md relative ${
-                gift.isPurchased ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
-              }`}
-              onClick={(e) => !gift.isPurchased && handleGiftClick(e, gift)}
-              whileHover={!gift.isPurchased ? { scale: 1.03 } : {}}
-              whileTap={!gift.isPurchased ? { scale: 0.97 } : {}}
-            >
-              <span className="absolute top-4 left-4 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
-                {gift.category}
-              </span>
-              <img
-                src={gift.image}
-                alt={gift.name}
-                className="w-full h-48 object-contain mb-4 mt-8"
-              />
-              <h3 className="text-lg font-semibold">{gift.name}</h3>
-              <div className="flex items-center justify-between mt-2">
-                <p className="text-xl font-bold text-blue-600">
-                  R$ {gift.price.toFixed(2).replace(".", ",")}
-                </p>
-                <button
-                  className={`bg-gray-200 text-gray-800 rounded-full w-8 h-8 flex items-center justify-center text-xl font-bold hover:bg-gray-300 transition-colors ${
-                    gift.isPurchased ? "hidden" : ""
-                  }`}
-                  aria-label="Ver detalhes"
-                >
-                  +
-                </button>
-              </div>
-              {gift.isPurchased && (
-                <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center text-[#d8b348] text-xl font-bold rounded-lg">
-                  Comprado!
-                </div>
-              )}
-            </motion.div>
-          ))}
+          {gift.isPurchased && (
+            <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center text-[#d8b348] text-xl font-bold rounded-lg">
+              Comprado!
+            </div>
+          )}
         </motion.div>
-      </div>
+      ))}
+    </motion.div>
+  </div>
 
-      {selectedGift && isModalOpen && (
-        <ProductModal
-          gift={selectedGift}
-          onClose={() => setIsModalOpen(false)}
-          onPurchase={() => handleGiftPurchase(selectedGift.id)}
-        />
-      )}
-    </section>
+  {selectedGift && isModalOpen && (
+    <ProductModal gift={selectedGift} onClose={() => setIsModalOpen(false)} onPurchase={() => handleGiftPurchase(selectedGift.id)} />
+  )}
+</section>
   );
 };
 

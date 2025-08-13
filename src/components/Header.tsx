@@ -74,13 +74,13 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        <motion.div variants={imageVariants} className="flex-1 hidden md:flex justify-end">
-          <img
-            src={imagemCriancas}
-            alt="Foto do casal criança"
-            className="w-full max-w-lg rounded-2xl object-cover"
-          />
-        </motion.div>
+        <motion.div variants={imageVariants} className="flex-1 w-full flex justify-center mt-10 md:mt-0">
+  <img
+    src={imagemCriancas}
+    alt="Foto do casal criança"
+    className="w-3/4 sm:w-1/2 md:w-full max-w-lg rounded-2xl object-cover mx-auto"
+  />
+</motion.div>
       </motion.div>
 
       <motion.div
