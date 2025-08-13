@@ -1,4 +1,6 @@
 import React from "react";
+import { motion } from "framer-motion"; // 1. Importe o motion
+import type { Variants } from "framer-motion";
 
 // TODO: Troque os placeholders pelas suas 6 fotos do casal
 // Sugestão: Coloque as fotos em ordem cronológica, da mais antiga para a mais nova.
@@ -9,23 +11,69 @@ import casalFoto5 from "/src/assets/casal-foto-5.jpg";
 import casalFoto6 from "/src/assets/casal-foto-6.jpg";
 import casalFoto7 from "/src/assets/casal-foto-7.jpg"; // Foto mais recente
 
+// 2. Definição das variantes de animação para um código mais limpo
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3, // Atraso entre a animação do texto e das fotos
+    },
+  },
+};
+
+const textVariants : Variants = {
+  hidden: { opacity: 0, x: -50 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.8, ease: "easeOut" },
+  },
+};
+
+const photoTimelineVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.25, // Atraso entre a animação de cada foto
+    },
+  },
+};
+
+const photoVariants : Variants = {
+  hidden: { opacity: 0, y: 30, scale: 0.9 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.6, ease: "easeInOut" },
+  },
+};
+
+
 const About: React.FC = () => {
   const photos = [
-    { src: casalFoto1, alt: "2024", caption: "// commit: Curtindo em SP", position: "top-0 left-10", rotation: "-rotate-3" },
-    { src: casalFoto2, alt: "Primeira viagem", caption: "// feature:Primeira viagem", position: "top-32 right-8", rotation: "rotate-2" },
-    { src: casalFoto3, alt: "Um momento especial", caption: "// refactor: 2023", position: "top-64 left-12", rotation: "rotate-4" },
-    { src: casalFoto5, alt: "Aniversário", caption: "// merge: 2022", position: "top-96 right-16", rotation: "-rotate-5" },
+    { src: casalFoto1, alt: "Início do namoro", caption: "// commit inicial: 2018", position: "top-0 left-10", rotation: "-rotate-3" },
+    { src: casalFoto2, alt: "Primeira viagem", caption: "// feature: primeiraViagem.js", position: "top-32 right-8", rotation: "rotate-2" },
+    { src: casalFoto3, alt: "Um momento especial", caption: "// refactor: mais um ano juntos", position: "top-64 left-12", rotation: "rotate-4" },
+    { src: casalFoto5, alt: "Aniversário", caption: "// merge: planos futuros", position: "top-96 right-16", rotation: "-rotate-5" },
     { src: casalFoto6, alt: "Noivado", caption: "// release: v2.0-noivado", position: "top-[30rem] left-8", rotation: "rotate-2" },
-    { src: casalFoto7, alt: "Foto recente", caption: "// deploy: --Inicio", position: "top-[38rem] right-10", rotation: "-rotate-3" },
+    { src: casalFoto7, alt: "Foto recente", caption: "// deploy: --casamento", position: "top-[38rem] right-10", rotation: "-rotate-3" },
   ];
 
   return (
-    <section id="about" className="bg-[#F4F4F4] py-24 px-4 sm:px-8 md:px-16">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-16 md:gap-20">
-        {/* --- Coluna de Texto à esquerda --- */}
-        <div className="flex-1 flex flex-col items-start relative md:pl-8 z-10">
-          <div className="absolute left-0 top-0 w-1 h-20 bg-[#d8b348] hidden md:block" />
-          <h2 className="text-3xl md:text-4xl font-bold text-[#d8b348] mb-6 pl-4 md:pl-0">
+    <section id="about" className="bg-[#F4F4F4] py-24 px-4 sm:px-8 md:px-16 overflow-x-hidden">
+      <motion.div
+        className="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-16 md:gap-20"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        {/* --- Coluna de Texto à esquerda com animação --- */}
+        <motion.div variants={textVariants} className="flex-1 flex flex-col items-start relative md:pl-8 z-10">
+          <div className="absolute left-0 top-0 w-1 h-20 bg-yellow-600 hidden md:block" />
+          <h2 className="text-3xl md:text-4xl font-bold text-yellow-600 mb-6 pl-4 md:pl-0">
             Nossa história
           </h2>
 
@@ -52,10 +100,10 @@ const About: React.FC = () => {
               está só começando.
             </p>
           </div>
-        </div>
+        </motion.div>
 
-        {/* --- Colagem de Imagens "Linha do Tempo" à direita --- */}
-        <div className="flex-1 flex justify-center items-start w-full mt-10 md:mt-0 min-h-[800px]">
+        {/* --- Colagem de Imagens "Linha do Tempo" à direita com animação --- */}
+        <motion.div variants={photoTimelineVariants} className="flex-1 flex justify-center items-start w-full mt-10 md:mt-0 min-h-[800px]">
           <div className="relative w-full max-w-lg h-full">
             {/* A Linha do Tempo em SVG */}
             <svg
@@ -64,19 +112,23 @@ const About: React.FC = () => {
               viewBox="0 0 400 800"
               preserveAspectRatio="none"
             >
-              <path
+              <motion.path
                 d="M 200 0 V 120 L 300 220 V 320 L 150 450 V 550 L 280 680 V 800"
                 stroke="#d1d5db"
                 strokeWidth="3"
                 fill="none"
                 strokeLinecap="round"
                 strokeDasharray="8 8"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 2, ease: "easeInOut" }}
               />
             </svg>
 
             {photos.map((photo, index) => (
-              <div
+              <motion.div
                 key={index}
+                variants={photoVariants}
                 className={`absolute transform transition-transform duration-300 ease-in-out hover:scale-110 hover:z-20 group ${photo.position} ${photo.rotation}`}
               >
                 {/* Polaroid */}
@@ -91,11 +143,11 @@ const About: React.FC = () => {
                     {photo.caption}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

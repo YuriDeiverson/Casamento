@@ -1,40 +1,99 @@
 import React from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import imagemForneto from "/src/assets/forneto-pizzaria 1.png";
 
+import type { Variants } from "framer-motion";
+
+
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.25 },
+  },
+};
+
+const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: "easeOut" },
+  },
+};
+
 const Adress: React.FC = () => {
+  // Parallax control
+  const { scrollYProgress } = useScroll();
+  const yParallax = useTransform(scrollYProgress, [0, 1], [0, -50]);
+
   return (
-    <section id="adress" className="bg-[#F4F4F4] py-24 px-4 sm:px-8 md:px-16">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start gap-10">
-        {/* Texto */}
-        <div className="flex-1 flex flex-col items-start relative pl-0 md:pl-8">
-          
-         
-
-          <h2 className="text-3xl md:text-4xl font-bold text-[#d8b348] mb-6 pl-4 md:pl-0">
+    <motion.section
+      id="adress"
+      className="bg-[#F4F4F4] py-24 px-4 sm:px-8 md:px-16"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+    >
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start gap-16">
+        
+        {/* Coluna de Texto */}
+        <motion.div
+          variants={fadeInUp}
+          className="flex-1 flex flex-col items-start"
+        >
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold text-[#d8b348] mb-4"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
             Local
-          </h2>
-          {/* Linha amarela abaixo do título */}
-          <div className="w-16 h-1 bg-[#d8b348] mb-6 ml-4 md:ml-0" />
+          </motion.h2>
 
-          <p className="text-gray-700 text-base sm:text-lg leading-relaxed text-justify pl-4 md:pl-0">
-            Data: 28 de Novembro às 18 hrs
-            <br /><br />
-            Forneto Restaurante, R. José Maia Gomes, 173
+          <motion.div
+            className="w-16 h-1 bg-[#d8b348] mb-8"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          />
+
+          <motion.p
+            className="text-gray-700 text-base sm:text-lg leading-relaxed"
+            variants={fadeInUp}
+          >
+            <strong>Data:</strong> 28 de Novembro às 18h
+            <br />
+            <br />
+            <strong>Forneto Restaurante</strong>
+            <br />
+            R. José Maia Gomes, 173
             <br />
             Jatiúca, Maceió – AL, 57036-240
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        {/* Imagem */}
-        <div className="flex-1 flex justify-center md:justify-end">
-          <img
+        {/* Coluna da Imagem com Parallax */}
+        <motion.div
+          variants={fadeInUp}
+          className="flex-1 w-full flex justify-start md:justify-end mt-10 md:mt-0"
+        >
+          <motion.img
             src={imagemForneto}
             alt="Forneto Restaurante"
-            className="w-full max-w-md rounded-lg shadow-lg object-cover"
+            className="w-full max-w-lg rounded-lg shadow-lg object-cover"
+            style={{ y: yParallax }}
+            whileHover={{ scale: 1.03, rotate: 0.5 }}
+            transition={{ type: "spring", stiffness: 200 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
           />
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

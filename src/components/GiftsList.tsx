@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import ProductModal from "./ProductModal";
-
+import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 // --- Importações do Firebase ---
 import { db } from "../firabse";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
@@ -102,7 +103,7 @@ const initialGifts: Gift[] = [
     isPurchased: false,
   },
   {
-    id: 8,
+    id: 9,
     name: "Coberdrom Colcha Cobre Leito Edredom Com Enchimento",
     price: 279.00,
     image: Ededrom,
@@ -111,7 +112,7 @@ const initialGifts: Gift[] = [
     isPurchased: false,
   },
   {
-    id: 8,
+    id: 10,
     name: "Panela De Pressão  + Cuscuzeira ",
     price: 194.77,
     image: Cuscuzeira,
@@ -121,7 +122,7 @@ const initialGifts: Gift[] = [
   },
 
     {
-    id: 8,
+    id: 11,
     name: "Faqueiro 42 Pçs Inox",
     price: 124.99,
     image: Faqueiro,
@@ -138,9 +139,8 @@ const GiftsList: React.FC = () => {
   const [selectedGift, setSelectedGift] = useState<Gift | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [sortOrder] = useState<"asc" | "desc">("asc");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const categoryButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -148,21 +148,17 @@ const GiftsList: React.FC = () => {
     const syncWithFirestore = async () => {
       setLoading(true);
       try {
-        const collectionName = "gifts";
-        const giftsCollectionRef = collection(db, collectionName);
-
+        const giftsCollectionRef = collection(db, "gifts");
         const updatedGifts = await Promise.all(
           initialGifts.map(async (localGift) => {
             const giftDocRef = doc(giftsCollectionRef, String(localGift.id));
             const docSnap = await getDoc(giftDocRef);
-
             if (docSnap.exists() && docSnap.data().isPurchased) {
               return { ...localGift, isPurchased: true };
             }
             return localGift;
-          }),
+          })
         );
-
         setGifts(updatedGifts);
       } catch (error) {
         console.error("Erro ao sincronizar com o Firestore:", error);
@@ -181,15 +177,13 @@ const GiftsList: React.FC = () => {
   };
 
   const handleGiftPurchase = async (giftId: number) => {
-    // ✅ BUG CORRIGIDO AQUI: A coleção deve ser 'gifts', para ser consistente.
     const giftDocRef = doc(db, "gifts", String(giftId));
     try {
       await setDoc(giftDocRef, { isPurchased: true });
-
       setGifts((prevGifts) =>
         prevGifts.map((gift) =>
-          gift.id === giftId ? { ...gift, isPurchased: true } : gift,
-        ),
+          gift.id === giftId ? { ...gift, isPurchased: true } : gift
+        )
       );
       setIsModalOpen(false);
     } catch (error) {
@@ -198,9 +192,7 @@ const GiftsList: React.FC = () => {
     }
   };
 
-  const categories = Array.from(
-    new Set(initialGifts.map((gift) => gift.category)),
-  );
+  const categories = Array.from(new Set(initialGifts.map((gift) => gift.category)));
   const handleCategorySelect = (category: string | null) => {
     setSelectedCategory(category);
     setShowCategoryDropdown(false);
@@ -208,12 +200,10 @@ const GiftsList: React.FC = () => {
 
   const filteredAndSortedGifts = gifts
     .filter((gift) =>
-      gift.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      gift.name.toLowerCase().includes(searchQuery.toLowerCase())
     )
     .filter((gift) => !selectedCategory || gift.category === selectedCategory)
-    .sort((a, b) =>
-      sortOrder === "asc" ? a.price - b.price : b.price - a.price,
-    );
+    .sort((a, b) => (sortOrder === "asc" ? a.price - b.price : b.price - a.price));
 
   if (loading) {
     return (
@@ -223,6 +213,24 @@ const GiftsList: React.FC = () => {
     );
   }
 
+  // --- Variants do Framer Motion ---
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 },
+    },
+  };
+
+  const itemVariants : Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 120, damping: 12 },
+    },
+  };
+
   return (
     <section id="gifts" className="bg-[#F4F4F4] py-12 px-4 sm:px-8 md:px-16">
       <div className="max-w-7xl mx-auto">
@@ -230,42 +238,24 @@ const GiftsList: React.FC = () => {
           Lista de presentes
         </h2>
 
+        {/* Filtros e pesquisa */}
         <div className="bg-white p-4 rounded-lg shadow-md flex flex-col md:flex-row items-center gap-4 mb-8">
+          {/* Dropdown categoria */}
           <div className="relative w-full md:w-48">
             <button
               ref={categoryButtonRef}
               className="flex items-center gap-2 p-3 border border-gray-300 rounded-lg bg-white w-full justify-center"
               onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-500"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path d="M7 3a1 1 0 00-1 1v1a1 1 0 001 1h2a1 1 0 001-1V4a1 1 0 00-1-1H7zM7 7a1 1 0 00-1 1v1a1 1 0 001 1h2a1 1 0 001-1V8a1 1 0 00-1-1H7zM7 11a1 1 0 00-1 1v1a1 1 0 001 1h2a1 1 0 001-1v-1a1 1 0 00-1-1H7zM7 15a1 1 0 00-1 1v1a1 1 0 001 1h2a1 1 0 001-1v-1a1 1 0 00-1-1H7z" />
-                <path
-                  fillRule="evenodd"
-                  d="M11 3a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 01-1 1h-2a1 1 0 01-1-1V3zM11 7a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 01-1 1h-2a1 1 0 01-1-1V7zM11 11a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 01-1 1h-2a1 1 0 01-1-1v-1zM11 15a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 01-1 1h-2a1 1 0 01-1-1v-1z"
-                  clipRule="evenodd"
-                />
-              </svg>
               {selectedCategory || "Categoria"}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className={`h-4 w-4 ml-2 transition-transform ${
-                  showCategoryDropdown ? "rotate-180" : ""
-                }`}
+                className={`h-4 w-4 ml-2 transition-transform ${showCategoryDropdown ? "rotate-180" : ""}`}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
             {showCategoryDropdown && (
@@ -288,6 +278,8 @@ const GiftsList: React.FC = () => {
               </div>
             )}
           </div>
+
+          {/* Pesquisa */}
           <div className="relative flex items-center flex-grow">
             <input
               type="text"
@@ -308,59 +300,23 @@ const GiftsList: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex mb-8 border-b border-gray-300">
-          <button className="py-3 px-6 text-gray-800 font-semibold border-b-2 border-yellow-600 -mb-px">
-            Lista de presentes
-          </button>
-          <button
-            className="py-3 px-6 text-gray-600 hover:text-[#d8b348] flex items-center gap-2"
-            onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-          >
-            Faixa de preço
-            {sortOrder === "asc" ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 10l7-7m0 0l7 7m-7-7v18"
-                />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                />
-              </svg>
-            )}
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {/* Lista de presentes */}
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           {filteredAndSortedGifts.map((gift) => (
-            <div
+            <motion.div
               key={gift.id}
+              variants={itemVariants}
               className={`bg-white p-4 rounded-lg shadow-md relative ${
-                gift.isPurchased
-                  ? "opacity-50 cursor-not-allowed"
-                  : "cursor-pointer"
+                gift.isPurchased ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
               }`}
               onClick={(e) => !gift.isPurchased && handleGiftClick(e, gift)}
+              whileHover={!gift.isPurchased ? { scale: 1.03 } : {}}
+              whileTap={!gift.isPurchased ? { scale: 0.97 } : {}}
             >
               <span className="absolute top-4 left-4 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
                 {gift.category}
@@ -389,9 +345,9 @@ const GiftsList: React.FC = () => {
                   Comprado!
                 </div>
               )}
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       {selectedGift && isModalOpen && (
