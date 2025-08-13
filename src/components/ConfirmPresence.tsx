@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { db } from "../firabse";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 // ✅ Verifique se este caminho para a imagem está correto
-import sideImage from "../assets/tiro-vertical-foret-de-soignes-belgica-bruxelas-com-o-sol-brilhando-atraves-dos-galhos.jpg";
+import sideImage from "../assets/Bosque.jpg";
 
 interface ConfirmPresenceProps {
   onNavigate: (page: string) => void;
