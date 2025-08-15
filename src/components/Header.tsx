@@ -46,7 +46,7 @@ const Header: React.FC = () => {
               Bem-vindos ao <span className="text-[#d8b348]">💛</span>
             </motion.h1>
             <motion.h2 variants={itemVariants} className="text-4xl sm:text-5xl font-extrabold text-gray-900 mt-2 leading-tight">
-              Casamento de Yuri e Leila
+              Casamento de Leila e Yuri
             </motion.h2>
 
             <motion.p variants={itemVariants} className="text-gray-500 italic mt-4 text-base sm:text-lg max-w-lg">
@@ -74,11 +74,15 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        <motion.div variants={imageVariants} className="flex-1 w-full flex justify-center mt-10 md:mt-0">
+      <motion.div
+  variants={imageVariants}
+  className="flex-1 w-full flex justify-center mt-10 md:mt-0"
+>
   <img
     src={imagemCriancas}
     alt="Foto do casal criança"
-    className="w-3/4 sm:w-1/2 md:w-full max-w-lg rounded-2xl object-cover mx-auto"
+    className="w-full sm:w-3/4 md:w-full rounded-2xl mx-auto 
+               object-contain sm:object-cover"
   />
 </motion.div>
       </motion.div>
