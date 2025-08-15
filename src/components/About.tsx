@@ -7,9 +7,9 @@ import type { Variants } from "framer-motion";
 import casalFoto1 from "/src/assets/casal-foto-6.jpg"; // Foto mais antiga
 import casalFoto2 from "/src/assets/casal-foto-2.jpg";
 import casalFoto3 from "/src/assets/casal-foto-3.jpg";
-import casalFoto5 from "/src/assets/casal-foto-5.jpg";
-import casalFoto6 from "/src/assets/casal-foto-9.jpg";
-import casalFoto7 from "/src/assets/casal-foto-8.jpg"; // Foto mais recente
+import casalFoto5 from "/src/assets/casal-3.jpg";
+import casalFoto6 from "/src/assets/casal-2.jpg";
+import casalFoto7 from "/src/assets/casal-1.png"; // Foto mais recente
 
 // 2. Definição das variantes de animação para um código mais limpo
 const containerVariants = {
@@ -53,12 +53,12 @@ const photoVariants : Variants = {
 
 const About: React.FC = () => {
   const photos = [
-    { src: casalFoto1, alt: "Início do namoro", caption: "// 2018", position: "top-0 left-10", rotation: "-rotate-3" },
-    { src: casalFoto2, alt: "Primeira viagem", caption: "// 2024", position: "top-32 right-8", rotation: "rotate-2" },
+    { src: casalFoto2, alt: "Primeira viagem", caption: "// 2024", position: "top-0 left-10", rotation: "-rotate-3" },
+    { src: casalFoto7, alt: "Comemoração especial", caption: "// 2023", position: "top-32 right-8", rotation: "rotate-2" },
     { src: casalFoto3, alt: "Um momento especial", caption: "// 2022", position: "top-64 left-12", rotation: "rotate-4" },
-    { src: casalFoto5, alt: "Aniversário", caption: "// 2023", position: "top-96 right-16", rotation: "-rotate-5" },
-    { src: casalFoto6, alt: "Noivado", caption: "// 2019", position: "top-[30rem] left-8", rotation: "rotate-2" },
-    { src: casalFoto7, alt: "Foto recente", caption: "// 2022", position: "top-[38rem] right-10", rotation: "-rotate-3" },
+    { src: casalFoto6, alt: "Dois anos juntos", caption: "// 2021", position: "top-96 right-16", rotation: "-rotate-5" },
+    { src: casalFoto1, alt: "Um ano juntos", caption: "// 2020", position: "top-[30rem] left-8", rotation: "rotate-2" },
+    { src: casalFoto5, alt: "Início do namoro", caption: "// 2019", position: "top-[38rem] right-10", rotation: "-rotate-3" },
   ];
 
   return (

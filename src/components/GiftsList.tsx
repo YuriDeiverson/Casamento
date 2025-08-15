@@ -18,6 +18,9 @@ import Cafeteira from "../assets/Cafeteira-removebg-preview.png";
 import Ededrom from "../assets/Ededrom.png";
 import Cuscuzeira from "../assets/Cuscuzeira.png";
 import Faqueiro from "../assets/Faqueiro.png";
+import Assadeiras from "../assets/Assadeira.png";
+import Lençol from "../assets/LençolCasal.png";
+import Toalhas from "../assets/Toalhas.png";
 
 interface Gift {
   id: number;
@@ -128,6 +131,36 @@ const initialGifts: Gift[] = [
     image: Faqueiro,
     category: "Cozinha",
     link: "https://www.mercadolivre.com.br/faqueiro-42-pcs-inox-siena-serve-6-pessoas-brinox-5109120/up/MLBU1118127242?pdp_filters=item_id:MLB2861433301#origin%3Dshare%26sid%3Dshare",
+    isPurchased: false,
+  },
+
+   {
+    id: 12,
+    name: " Assadeiras Retangulares 3pçs",
+    price: 199.99,
+    image: Assadeiras,
+    category: "Cozinha",
+    link: "https://www.havan.com.br/jogo-de-assadeiras-retangular-portuguesa-havan-casa-3-pecas-branco/p",
+    isPurchased: false,
+  },
+
+  {
+    id: 13,
+    name: " Lençol Casal com Elástico e Fronhas",
+    price: 229.90,
+    image: Lençol,
+    category: "Cama, Mesa e Banho",
+    link: "https://www.karsten.com.br/lencol-casal-com-elastico-e-fronhas-100-algodao-noah-verde-chabranco-3570071/p",
+    isPurchased: false,
+  },
+
+    {
+    id: 14,
+    name: " Jogo de Banho 5 Peças",
+    price: 287.91,
+    image: Toalhas,
+    category: "Cama, Mesa e Banho",
+    link: "https://www.karsten.com.br/jogo-de-banho-5-pecas-fio-penteado-lumina-petalarosa-3844210/p",
     isPurchased: false,
   },
 ];
